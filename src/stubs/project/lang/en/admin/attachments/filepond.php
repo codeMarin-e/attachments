@@ -1,5 +1,6 @@
 <?php
 return [
+    'label' => 'Files',
     'labelIdle' => 'File here',
     'labelInvalidField' => 'Field contains invalid files',
     'labelFileWaitingForSize' => 'Waiting for size',
