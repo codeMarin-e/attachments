@@ -1,0 +1,32 @@
+{
+    "name": "marinar/attachments",
+    "description": "Attachments",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marin Ivanov",
+            "email": "marin@dev.nddesign.no"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Marinar\\Attachments\\": "src/"
+        }
+    },
+
+    "require": {
+    },
+    "extra": {
+        "marinar": {
+            "module": false,
+            "plugin": true,
+            "addon_to": false
+        },
+        "laravel": {
+            "aliases": {
+                "MarinarAttachments": "Marinar\\Attachments\\MarinarAttachments"
+            }
+        }
+    }
+}
