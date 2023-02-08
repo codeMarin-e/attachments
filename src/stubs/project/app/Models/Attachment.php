@@ -4,11 +4,11 @@
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Http\UploadedFile;
     use Illuminate\Support\Facades\DB;
-    use Marinar\Marinar\Traits\MacroableModel;
+    use App\Traits\MacroableModel;
     use Illuminate\Support\Facades\Storage;
     use Intervention\Image\Facades\Image;
-    use Marinar\Attachments\Traits\Attachable;
-    use Marinar\Orderable\Traits\Orderable;
+    use App\Traits\Attachable;
+    use App\Traits\Orderable;
 
     class Attachment extends Model {
 
@@ -25,6 +25,8 @@
         protected static function boot() {
             parent::boot();
             static::deleting( static::class.'@onDelete_storage' );
+
+            // @HOOK_BOOT
         }
 
         public function orderableQryBld($qryBld = null) {

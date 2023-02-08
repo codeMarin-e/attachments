@@ -1,5 +1,5 @@
 <?php
-    namespace Marinar\Attachments\Traits;
+    namespace App\Traits;
 
     use Illuminate\Http\UploadedFile;
     use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@
 
         public function addAttachments($uploadedFiles, $type = '', $attachAttributes = []) {
             Attachment::storeAttachments($uploadedFiles, [
-                'disk' => isset($attachAttributes['disk'])??
+                'disk' => $attachAttributes['disk']??
                     (property_exists(static::class, 'attach_disk')?
                         static::$attach_disk : config('marinar_attachments.disk') //IF null will use default
                     ),
