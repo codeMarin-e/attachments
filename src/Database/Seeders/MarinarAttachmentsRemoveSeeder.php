@@ -22,7 +22,7 @@ class MarinarAttachmentsRemoveSeeder extends Seeder {
         $this->refComponents->info("Done!");
     }
 
-    public function clearDB() {
+    public function clearMe() {
         $this->refComponents->task("Clear DB", function() {
             Permission::whereIn('name', [
                 'attachment.create',
