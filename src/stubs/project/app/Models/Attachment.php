@@ -77,6 +77,7 @@
                     ->where($this->sameQryWheres())
                     ->addBinding([$this->id], 'join')
                     ->update([
+                        'updated_at' => new \Datetime(),
                         'main' => DB::raw("CASE WHEN id = ? then 1 ELSE 0 END")
                     ]);
                 return;

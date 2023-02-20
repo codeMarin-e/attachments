@@ -32,6 +32,7 @@ return [
      */
     'exclude_stubs' => [
         dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'public_html'.DIRECTORY_SEPARATOR.'admin'.DIRECTORY_SEPARATOR.'ext_icons',
+        // @HOOK_CONFIG_EXCLUDE_STUBS
     ],
 
     /**
@@ -39,7 +40,9 @@ return [
      * file_path => [ '@hook1', '@hook2' ]
      * file_path => * - all from this file
      */
-    'exclude_injects' => [],
+    'exclude_injects' => [
+        // @HOOK_CONFIG_EXCLUDE_INJECTS
+    ],
 
     /**
      * Disk driver to be used - check filesystem.php
