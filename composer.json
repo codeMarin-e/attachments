@@ -22,11 +22,6 @@
             "module": false,
             "plugin": true,
             "addon_to": false
-        },
-        "laravel": {
-            "aliases": {
-                "MarinarAttachments": "Marinar\\Attachments\\MarinarAttachments"
-            }
         }
     }
 }
