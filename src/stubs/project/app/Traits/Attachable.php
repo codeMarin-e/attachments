@@ -34,7 +34,7 @@
         }
 
         public function attachments() {
-            return $this->morphMany( Attachment::class, 'attachable');
+            return $this->morphMany( Attachment::class, 'attachable')->orderBy('ord', 'ASC');
         }
 
         public function getMainAttachment($type = null) {
