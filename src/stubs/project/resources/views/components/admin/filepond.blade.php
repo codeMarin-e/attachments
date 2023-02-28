@@ -57,11 +57,12 @@
         FilePondPluginImageExifOrientation,
         FilePondPluginFileValidateType,
     );
-    var inputElement = document.querySelector('#{{$querySelectorID}}');
+    var domElement = document.querySelector('#{{$querySelectorID}}');
 
-    var initiateFilePond = function(inputElement) {
+    var initiateFilePond = function(domElement) {
         // Create a FilePond instance
-        FilePond.create(inputElement, {
+        FilePond.create(domElement, {
+            name: domElement.querySelector('input').getAttribute('name') ,
             credits: false,
             styleButtonRemoveItemPosition: 'right',
             styleItemPanelAspectRatio: 0.7,
@@ -89,22 +90,22 @@
                 var url = '{{route("{$routeNamespace}.attach.preview", ['__TYPE__', '__ATTACH_ID__'])}}'.replace('__TYPE_____ATTACH_ID__', '');
                 window.open(url+file.serverId, '_blank');
             },
-{{--            @isset($attachments)--}}
-{{--            files: [--}}
-{{--                    @foreach($attachments as $attach)--}}
-{{--                    @php $sourceType = $attach->session_id? $inputName : $type; @endphp--}}
-{{--                {--}}
-{{--                    // the server file reference--}}
-{{--                    // source: 'test1.jpg',--}}
-{{--                    source: '{{$sourceType}}_{{$attach->id}}',--}}
-{{--                    // set type to local to indicate an already uploaded file--}}
-{{--                    options: {--}}
-{{--                        type: 'local',--}}
-{{--                    },--}}
-{{--                }@if(!$loop->last), @endif--}}
-{{--                @endforeach--}}
-{{--            ],--}}
-{{--            @endisset--}}
+            {{--            @isset($attachments)--}}
+                {{--            files: [--}}
+                {{--                    @foreach($attachments as $attach)--}}
+                {{--                    @php $sourceType = $attach->session_id? $inputName : $type; @endphp--}}
+                {{--                {--}}
+                {{--                    // the server file reference--}}
+                {{--                    // source: 'test1.jpg',--}}
+                {{--                    source: '{{$sourceType}}_{{$attach->id}}',--}}
+                {{--                    // set type to local to indicate an already uploaded file--}}
+                {{--                    options: {--}}
+                {{--                        type: 'local',--}}
+                {{--                    },--}}
+                {{--                }@if(!$loop->last), @endif--}}
+                {{--                @endforeach--}}
+                {{--            ],--}}
+                {{--            @endisset--}}
             server: {
                 timeout: 7000,
                 headers: {
@@ -153,7 +154,7 @@
         })
     }
     @if($init)
-        initiateFilePond(inputElement);
+    initiateFilePond(domElement);
     @endif
 </script>
 @endpushonceOnReady
@@ -162,7 +163,7 @@
     <legend>{{$langs['label']}}</legend>
     <div class="form-group" id="{{$querySelectorID}}">
         {{$slot}}
-        @if($showAttachments && isset($attachments))
+        @if($showAttachments && $attachments->count())
             <ul class="d-none">
                 @foreach($attachments as $attach)
                     @php $sourceType = $attach->session_id? $inputName : $type; @endphp
