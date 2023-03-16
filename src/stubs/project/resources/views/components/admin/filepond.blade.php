@@ -3,6 +3,11 @@
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 <style> .filepond--item { width: calc(15% - 0.5em); }</style>
 @endpushonce
+@isset($width)
+    @push('above_css')
+        <style> #{{$querySelectorID}} .filepond--item { width: calc({{$width}} - 0.5em); }</style>
+    @endpush
+@endisset
 @pushonce('below_js')
 <!-- https://pqina.nl/filepond/docs/api/plugins/file-validate-type/ -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
@@ -31,7 +36,7 @@
         $attachable->attachments()->where('type', $type)->get()->keyBy('id') : collect();
     if($oldOrder = old("{$oldInputBag}.{$type}")) {
         $attachments = collect();
-        foreach($oldOrder as $attachSource) {
+        foreach((array)$oldOrder as $attachSource) {
             $attachId = (int)str_replace([$inputName."_", $type."_",], '', $attachSource);
             if(isset($session_attachments[$attachId])) {
                 $attachments->push($session_attachments[$attachId]);
@@ -57,12 +62,17 @@
         FilePondPluginImageExifOrientation,
         FilePondPluginFileValidateType,
     );
+</script>
+@endpushonceOnReady
+@pushOnReady('below_js_on_ready')
+<script>
     var domElement = document.querySelector('#{{$querySelectorID}}');
 
     var initiateFilePond = function(domElement) {
+        var inputName =  domElement.querySelectorAll('input[type="file"]')[0].getAttribute('name');
         // Create a FilePond instance
         FilePond.create(domElement, {
-            name: domElement.querySelector('input').getAttribute('name') ,
+            name: inputName,
             credits: false,
             styleButtonRemoveItemPosition: 'right',
             styleItemPanelAspectRatio: 0.7,
@@ -118,7 +128,7 @@
                     onload: null,
                     onerror: null,
                     ondata: (formData) => {
-                        formData.append('__input_name__', '{{$inputName}}');
+                        formData.append('__input_name__', inputName);
                         @isset($disk)
                         formData.append('__disk__', '{{$disk}}');
                         @endisset
@@ -157,7 +167,7 @@
     initiateFilePond(domElement);
     @endif
 </script>
-@endpushonceOnReady
+@endpushOnReady
 
 <fieldset>
     <legend>{{$langs['label']}}</legend>

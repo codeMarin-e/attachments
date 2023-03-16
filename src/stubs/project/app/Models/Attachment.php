@@ -146,7 +146,8 @@
                 'filename' => $thumbName,
                 'dir' => $this->dir,
                 'site_id' => $this->site_id,
-                'ord' => $freeOrd
+                'ord' => $freeOrd,
+                'extension' => $this->extension,
             ]);
         }
 

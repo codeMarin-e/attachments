@@ -74,7 +74,7 @@ class AttachmentsController extends Controller {
             $messages[$inputKey] = $mainMessages;
         }
         $validatedData = Validator::make(request()->all(), $rules, $messages)->validate();
-
+        $validatedData['__input_name__'] = str_replace('[]', '', $validatedData['__input_name__']);
         $commonWhere = [
             'type' => $validatedData['__input_name__'],
             'disk' => $validatedData['__disk__']?? config('marinar_attachments.disk'),
@@ -101,11 +101,11 @@ class AttachmentsController extends Controller {
                     return $fail( trans('admin/attachments/attachments.validation.revert.id.required') );
                 }
             },
-            'type' => ['required', 'string', 'max:255', function($attribute, $value, $fail) use (&$attachment) {
-                if($attachment && $attachment->type != $value) {
-                    return $fail( trans('admin/attachments/attachments.validation.revert.type.required') );
-                }
-            }]]
+                'type' => ['required', 'string', 'max:255', function($attribute, $value, $fail) use (&$attachment) {
+                    if($attachment && $attachment->type != $value) {
+                        return $fail( trans('admin/attachments/attachments.validation.revert.type.required') );
+                    }
+                }]]
         ], Arr::dot((array)trans('admin/attachments/attachments.validation.revert')))->validate();
         if(!auth()->user()->can('delete', $attachment)) abort(403);
         if(!$attachment->session_id) {
