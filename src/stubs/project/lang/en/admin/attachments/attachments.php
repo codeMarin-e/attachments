@@ -1,5 +1,5 @@
 <?php
-return [
+return \Illuminate\Support\Arr::undot([
     'validation.no_data' => 'There is no data',
     'validation.for_files' => \Illuminate\Support\Arr::undot([
         'required' => 'File should be uploaded, too',
@@ -22,4 +22,4 @@ return [
         'type.string' => 'Type should be string',
         'type.max' => 'Type is too long',
     ])
-];
+]);
